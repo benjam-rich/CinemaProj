@@ -1,0 +1,13 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    ViewBag.Title = "The Joel Hilton Film Collection";
+}
+
+<!--Here is the home page containing a picture of Joel Hilton, nav bar, and a link to add movies-->
+<div class="text-center">
+    <h1 class="display-4">Welcome to @ViewBag.Title</h1>
+    <br /><br />
+    <img src="~/JoelHilton.jpg" width="750"/>
+    <br /><br />
+    <a asp-action="newMovies">Click here to add new movies</a>
+</div>
