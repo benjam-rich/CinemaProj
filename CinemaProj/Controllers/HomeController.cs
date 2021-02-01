@@ -31,11 +31,23 @@ namespace CinemaProj.Controllers
             return View();
         }
 
+        //This Post saves the user input to temp storage and shows a completion page if the response is validated.
+        //Othwerwise it returns the same form view
         [HttpPost]
         public IActionResult newMovies(ApplicationResponse appResponse)
         {
-            TempStorage.AddApplication(appResponse);
-            return View("Movies", appResponse);
+            if (ModelState.IsValid)
+            {
+                TempStorage.AddApplication(appResponse);
+                return View("Movies", appResponse);
+                //Response.redirect
+            }
+            else
+            {
+                return View("newMovies");
+            }
+
+            
         }
 
         //This Action will display all the responses in temporary storage to the Movie List page as long as they're not Indendence Day
