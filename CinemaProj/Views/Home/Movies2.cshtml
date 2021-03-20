@@ -1,0 +1,26 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewBag.Title = "Movies";
+    ViewBag.Title = Model.Title;
+}
+
+@model CinemaProj.Models.MovieModel
+<div>
+    <!--This is where I will display a thank you for entering in a movie, as well as a response depending on if they entered a rated-R movie or not-->
+    <h2>Thank you for entering @ViewBag.Title into the list!</h2>
+    @if (Model.Rating == "R")
+    {
+        @:Wow, you entered an R-rated movie?! That's pretty edgy ;)
+    }
+    else
+    {
+        @:Thanks for not entering an R-Rated movie
+    }
+
+</div>
+
+<div>
+    Click <a asp-action="List">HERE</a> to see the list of movies
+</div>

@@ -13,11 +13,18 @@ namespace CinemaProj.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        //private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        //public HomeController(ILogger<HomeController> logger)
+        //{
+        //    _logger = logger;
+        //}
+
+        private MovieContext context { get; set; }
+
+        public HomeController(MovieContext con)
         {
-            _logger = logger;
+            context = con;
         }
 
         public IActionResult Index()
@@ -26,7 +33,7 @@ namespace CinemaProj.Controllers
         }
 
         [HttpGet]
-        public IActionResult newMovies()
+        public IActionResult NewMovies()
         {
             return View();
         }
@@ -34,18 +41,19 @@ namespace CinemaProj.Controllers
         //This Post saves the user input to temp storage and shows a completion page if the response is validated.
         //Othwerwise it returns the same form view
         [HttpPost]
-        public IActionResult newMovies(ApplicationResponse appResponse)
+        public IActionResult NewMovies(MovieModel m)
         {
             if (ModelState.IsValid)
             {
-                TempStorage.AddApplication(appResponse);
-                return View("Movies", appResponse);
+                context.Movies.Add(m);
+                context.SaveChanges();
+                //TempStorage.AddApplication(appResponse);
+                //return View("Movies", appResponse);
                 //Response.redirect
+                return View("Movies");
             }
-            else
-            {
-                return View("newMovies");
-            }
+            return View("NewMovies");
+     
 
             
         }
@@ -53,7 +61,8 @@ namespace CinemaProj.Controllers
         //This Action will display all the responses in temporary storage to the Movie List page as long as they're not Indendence Day
         public IActionResult List()
         {
-            return View(TempStorage.Applications.Where(x => x.Title != "Independence Day"));
+            //return View(TempStorage.Applications.Where(x => x.Title != "Independence Day"));
+            return View(context.Movies);
         }
         public IActionResult Podcasts()
         {

@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
 
 namespace CinemaProj.Models
 {
-    /*Here is the aplication response page for validation and getting and setting the values from the form for the model */
-    public class ApplicationResponse
+    public class MovieModel
     {
+        [Key]
+        [Required]
+        public int MovieId { get; set; }
         [Required]
         public string Category { get; set; }
         [Required]
