@@ -1,0 +1,83 @@
+﻿@{
+    var Title = "";
+    var Category = "";
+    var Year = "";
+    var Director = "";
+    var Rating = "";
+    var Edited = "";
+    var LentTo = "";
+    var Notes = "";
+
+    if (IsPost)
+    {
+        Title = Request.Form["Title"];
+        Category = Request.Form["Category"];
+        Year = Request.Form["Year"];
+        Director = Request.Form["Director"];
+        Rating = Request.Form["Rating"];
+        Edited = Request.Form["Edited"];
+        LentTo = Request.Form["LentTo"];
+        Notes = Request.Form["Notes"];
+
+        var db = Database.Open("MovieDb.sqlite");
+        var insertCommand = "INSERT INTO Movies (Title, Category, Year, Director, Rating, Edited, LentTo, Notes) VALUES(@0, @1, @2, @3," +
+                    "@4, @5, @6, @7, @8)";
+        db.Execute(insertCommand, Title, Category, Year, Director, Rating, Edited, LentTo, Notes);
+        Response.Redirect("~/Movies");
+    }
+}
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Add a Movie</title>
+</head>
+<body>
+    <h1>Add a Movie</h1>
+    <form method="post">
+        <fieldset>
+            <legend>Movie Information</legend>
+            <p>
+                <label for="title">Title:</label>
+                <input type="text" name="Title" value="@Request.Form["Title"]" />
+            </p>
+
+            <p>
+                <label for="genre">Genre:</label>
+                <input type="text" name="Category" value="@Request.Form["Category"]" />
+            </p>
+
+            <p>
+                <label for="year">Year:</label>
+                <input type="text" name="Year" value="@Request.Form["Year"]" />
+            </p>
+            <p>
+                <label for="Director">Director:</label>
+                <input type="text" name="Director" value="@Request.Form["Director"]" />
+            </p>
+            <p>
+                <label for="Rating">Rating:</label>
+                <input type="text" name="Rating" value="@Request.Form["Rating"]" />
+            </p>
+            <p>
+                <label for="Edited">Edited:</label>
+                <input type="text" name="Edited" value="@Request.Form["Edited"]" />
+            </p>
+            <p>
+                <label for="LentTo">LentTo:</label>
+                <input type="text" name="LentTo" value="@Request.Form["LentTo"]" />
+            </p>
+            <p>
+                <label for="Notes">Notes:</label>
+                <input type="text" name="Notes" value="@Request.Form["Notes"]" />
+            </p>
+
+            <p><input type="submit" name="buttonSubmit" value="Add Movie" /></p>
+        </fieldset>
+    </form>
+</body>
+</html>
