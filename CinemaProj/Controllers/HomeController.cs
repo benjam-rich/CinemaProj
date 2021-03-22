@@ -58,12 +58,37 @@ namespace CinemaProj.Controllers
             
         }
 
-        //This Action will display all the responses in temporary storage to the Movie List page as long as they're not Indendence Day
+        [HttpGet]
         public IActionResult List()
         {
             //return View(TempStorage.Applications.Where(x => x.Title != "Independence Day"));
             return View(context.Movies);
         }
+
+        [HttpPost]
+        public IActionResult List(MovieModel m)
+        {
+            return View("DeleteM", m);
+        }
+
+        [HttpGet]
+        public IActionResult DeleteM()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public IActionResult DeleteM(MovieModel m)
+        {
+            context.Movies.Remove(m);
+            context.SaveChanges();
+            return View("List");
+        }
+
+
+
+
         public IActionResult Podcasts()
         {
             return View();
