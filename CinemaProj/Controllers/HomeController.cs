@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using CinemaProj.Models.ViewModels;
 
 namespace CinemaProj.Controllers
     /*This page controls what vies will display and what information is passed to each view. Very useful */
@@ -47,45 +48,59 @@ namespace CinemaProj.Controllers
             {
                 context.Movies.Add(m);
                 context.SaveChanges();
-                //TempStorage.AddApplication(appResponse);
-                //return View("Movies", appResponse);
-                //Response.redirect
-                return View("Movies");
+                //return View("Movies");
             }
-            return View("NewMovies");
-     
+            return View("List", new MovieViewModel
+            {
+                Movie = context.Movies.Where(x => x.Title != null)
+            });
 
-            
         }
 
         [HttpGet]
         public IActionResult List()
         {
-            //return View(TempStorage.Applications.Where(x => x.Title != "Independence Day"));
-            return View(context.Movies);
+            return View(new MovieViewModel
+            {
+                Movie = context.Movies
+            });
         }
 
         [HttpPost]
-        public IActionResult List(MovieModel m)
+        public IActionResult List(int movieId)
         {
-            return View("DeleteM", m);
-        }
 
-        [HttpGet]
-        public IActionResult DeleteM()
-        {
-            return View();
-        }
+            return View("EditMovie", new MovieViewModel
+            {
+                Movie = context.Movies.Where(x => x.MovieId == movieId),
 
+            }); ;
+        }
 
         [HttpPost]
-        public IActionResult DeleteM(MovieModel m)
+        public IActionResult MovieDelete(int MovieDeleteId)  //passing in movieID then removing the movie through its id
         {
-            context.Movies.Remove(m);
+            var removeMovie = context.Movies.FirstOrDefault(x => x.MovieId == MovieDeleteId);
+            context.Movies.Remove(removeMovie);
             context.SaveChanges();
-            return View("List");
+            return View("List", new MovieViewModel
+            {
+                Movie = context.Movies.Where(x => x.Title != null)
+            });
         }
 
+        [HttpPost]
+        public IActionResult EditMovie(MovieModel movieForm, int movieIdentity) //passing in the new edited movie and deleting old one
+        {
+            var removeMovie = context.Movies.FirstOrDefault(x => x.MovieId == movieIdentity);
+            context.Movies.Remove(removeMovie);
+            context.Movies.Add(movieForm);
+            context.SaveChanges();
+            return View("List", new MovieViewModel
+            {
+                Movie = context.Movies.Where(x => x.Title != null)
+            });
+        }
 
 
 

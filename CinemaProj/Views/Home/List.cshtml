@@ -1,23 +1,17 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-    ViewBag.Title = "List o Movies";
-}
-
-@model IEnumerable<MovieModel>
-<!--This page displays all of the movies currently submitted (except Independence Day)-->
+﻿
+@model MovieViewModel
+<h2>Movie List</h2>
 <div>
-    <h2>Here are all the movies currently in the collection</h2>
-    <!--This is the table with the proper headers containing all fo the movies currently in memory-->
-    <table>
+    <table class="table table-dark table-hover">
         <thead>
-            <th>Category</th><th>Title</th><th>Year</th><th>Director</th><th>Rating</th><th>Edited</th><th>Lent-to:</th><th>Notes</th>
+            <tr><th>Category </th><th> Title </th><th> Year </th><th> Director  </th><th> Rating</th><th> Edited </th><th> Lent to </th><th> Notes </th></tr>
         </thead>
-
         <tbody>
-            @foreach (var x in Model)
+            @foreach (var x in Model.Movie)
+
             {
+            @if (x.Title.ToLower() != "independence day")
+                {
             <tr>
                 <td>@x.Category</td>
                 <td>@x.Title</td>
@@ -27,16 +21,22 @@
                 <td>@x.Edited</td>
                 <td>@x.LentTo</td>
                 <td>@x.Notes</td>
-                <td class="text-center">
-                    <form asp-action="List" method="post">
-                        <input type="hidden" value="x.Title"/>
-                        <button type="submit" class="btn btn-sm btn-danger">
-                            Remove
-                        </button>
+                <td>
+                    <form method="post" asp-action="List">
+                        <button class="btn btn-group-sm btn-secondary" type="submit" name="movieId" value="@x.MovieId">Edit</button>
+                    </form>
+                </td>
+                <td>
+                    <form method="post" asp-action="MovieDelete">
+                        <button class="btn btn-group-sm btn-danger" type="submit" name="movieDeleteId" value="@x.MovieId">Delete</button>
                     </form>
                 </td>
             </tr>
+
+                }
+
             }
         </tbody>
+
     </table>
 </div>
