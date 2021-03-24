@@ -77,6 +77,7 @@ namespace CinemaProj.Controllers
             }); ;
         }
 
+
         [HttpPost]
         public IActionResult MovieDelete(int MovieDeleteId)  //passing in movieID then removing the movie through its id
         {
@@ -90,11 +91,11 @@ namespace CinemaProj.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditMovie(MovieModel movieForm, int movieIdentity) //passing in the new edited movie and deleting old one
+        public IActionResult EditMovie(MovieModel movieModel, int movieIdentity) //passing in the new edited movie and deleting old one
         {
             var removeMovie = context.Movies.FirstOrDefault(x => x.MovieId == movieIdentity);
             context.Movies.Remove(removeMovie);
-            context.Movies.Add(movieForm);
+            context.Movies.Add(movieModel);
             context.SaveChanges();
             return View("List", new MovieViewModel
             {
