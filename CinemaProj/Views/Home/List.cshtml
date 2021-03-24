@@ -1,6 +1,7 @@
 ﻿
 @model MovieViewModel
 <h2>Movie List</h2>
+<!--This page iterates through each of the items in the table referenced through the IEnumerable in the View Model-->
 <div>
     <table class="table table-dark table-hover">
         <thead>
@@ -22,6 +23,7 @@
                 <td>@x.LentTo</td>
                 <td>@x.Notes</td>
                 <td>
+                    <!--Buttons to edit and remove items currently in the database-->
                     <form method="post" asp-action="List">
                         <button class="btn btn-group-sm btn-secondary" type="submit" name="movieId" value="@x.MovieId">Edit</button>
                     </form>
