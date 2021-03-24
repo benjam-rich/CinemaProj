@@ -11,7 +11,7 @@ namespace CinemaProj.Models
         [Key]
         [Required]
         public int MovieId { get; set; }
-        [Required]
+        //[Required]
         public string Category { get; set; }
         [Required]
         public string Title { get; set; }
